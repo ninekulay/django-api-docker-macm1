@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+    employee_api:
+        container_name: django_api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes: 
+            - .:/app
+        ports: 
+            - 8000:8000
+        depends_on:
+            - employee_db
+    employee_db:
+        container_name: django_employee_db
+        image: mariadb
+        restart: always
+        environment: 
+            MYSQL_DATABASE: django_employee
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        volumes: 
+            - .dbdata:/var/lib/mysql
+        ports:
+            - 33066:3306
